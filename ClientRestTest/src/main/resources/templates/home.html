@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div th:replace="fragments/header :: header (pageTitle=#{home.title})"></div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#table').on('refresh.bs.table', function (params) {
+	    console.log("Table refreshed!");
+	    console.log(params);
+	});
+});
+
+
+</script>
+
+</head>
+
+
+
+<body>
+<div th:insert="fragments/navbar :: navbar"></div>
+  
+<div class="container">
+
+<div id="test">HOME</font>
+
+</div>
+</body>
+</html>

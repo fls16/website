@@ -1,0 +1,11 @@
+
+#navbarDropdownLabel {
+	color: white;
+}
+
+#navbarDropdown{
+	background-color:#222;
+	border-color:#080808;
+	width: 200px;
+	padding:5px;
+}

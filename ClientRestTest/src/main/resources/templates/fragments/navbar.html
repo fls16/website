@@ -1,0 +1,115 @@
+<div class="container" th:fragment="navbar">
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/" th:text="#{fragments.navbar.homepagename}"></a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="/persons" th:text="#{fragments.navbar.persons}"></a></li>
+			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="#">Page 1-1</a></li>
+					<li><a href="#">Page 1-2</a></li>
+					<li><a href="#">Page 1-3</a></li>
+				</ul>
+			</li>
+		</ul>
+		
+		<ul th:if="${currentUser == null}" class="nav navbar-nav navbar-right">
+		
+			<!-- REGISTER -->	
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					<span class="glyphicon glyphicon-user" th:text="'&nbsp;' + #{fragments.navbar.register}"></span>
+				</a>
+				<div id="navbarDropdown" class="dropdown-menu">
+						<p id="registerError"></p>
+						<div class="form-group">
+							<label id="navbarDropdownLabel" for="firstName" th:text="#{fragments.navbar.login.firstName} + ':'"></label>
+							<input id="firstNameInput" class="form-control" th:placeholder="#{fragments.navbar.login.firstName}" required/>
+						</div>
+						<div class="form-group">
+							<label id="navbarDropdownLabel" for="lastName" th:text="#{fragments.navbar.login.lastName} + ':'"></label>
+							<input id="lastNameInput" class="form-control" th:placeholder="#{fragments.navbar.login.lastName}" required/>
+						</div>
+						<div class="form-group">
+							<label id="navbarDropdownLabel" for="userName" th:text="#{fragments.navbar.login.userName} + ':'"></label>
+							<input id="userNameInput" class="form-control" th:placeholder="#{fragments.navbar.login.userName}" required/>
+						</div>
+						<div class="form-group">
+							<label id="navbarDropdownLabel" for="email" th:text="#{fragments.navbar.login.email} + ':'"></label>
+							<input id="emailInput" class="form-control" th:placeholder="#{fragments.navbar.login.email}" required/>
+						</div>
+						<div class="form-group">
+							<label id="navbarDropdownLabel" for="password" th:text="#{fragments.navbar.login.password} + ':'"></label>
+							<input id="passwordInput" class="form-control" th:placeholder="#{fragments.navbar.login.password}" required/>
+						</div>
+						<div class="form-group">
+							<label id="navbarDropdownLabel" for="matchingPassword" th:text="#{fragments.navbar.login.matchingPassword} + ':'"></label>
+							<input id="matchingPasswordInput" class="form-control" th:placeholder="#{fragments.navbar.login.matchingPassword}" required/>
+						</div>
+						<div class="checkbox">
+  							<label><input name="remember-me" type="checkbox"><span style="color: white;" th:text="#{fragments.navbar.login.rememberMe}"></span></label>
+						</div>
+						<button id="registerButton" class="btn btn-default btn-block" th:text="#{fragments.navbar.register}"></button>
+						<script type="text/javascript">
+						$("#registerButton").click(function(){
+							var userDTO = {
+								firstName:			$("#firstNameInput").val(),
+								lastName:			$("#lastNameInput").val(),
+								userName:			$("#userNameInput").val(),
+								email:				$("#emailInput").val(),
+								password:			$("#passwordInput").val(),
+								matchingPassword:	$("#matchingPasswordInput").val()
+							
+							$.ajax({
+						        url: '/register',
+						        type: 'POST',
+						        dataType: 'text',
+						        data: userDTO,
+						        success: function (html, status, response) {
+						           	alert(response);
+						        },
+						        error: function (error) {
+						            // do whatever
+						        }
+								})
+							});
+						</script>
+				</div>
+			<li>
+			
+			<!-- LOGIN -->
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					<span class="glyphicon glyphicon-log-in" th:text="'&nbsp;' + #{fragments.navbar.login}"></span>
+				</a>
+				<div id="navbarDropdown" class="dropdown-menu">
+					<form th:action="@{/login}" method="post">
+						<div class="form-group">
+							<label id="navbarDropdownLabel" for="userName" th:text="#{fragments.navbar.login.userName} + ':'"></label>
+							<input name="userName" type="text" class="form-control" id="userName" th:placeholder="#{fragments.navbar.login.userName}" required>
+						</div>
+						<div class="form-group">
+							<label id="navbarDropdownLabel" for="password" th:text="#{fragments.navbar.login.password} + ':'"></label>
+							<input name="password" type="password" class="form-control" id="password" th:placeholder="#{fragments.navbar.login.password}" required>
+						</div>
+						<div class="checkbox">
+  							<label><input name="remember-me" type="checkbox"><span style="color: white;" th:text="#{fragments.navbar.login.rememberMe}"></span></label>
+						</div>
+						<button type="submit" class="btn btn-default btn-block" th:text="#{fragments.navbar.login}"></button>
+					</form> 
+				</div>
+			<li>
+    	</ul>
+    	
+    	<!-- LOGOUT -->
+    	<form id="logoutForm" th:action="@{/logout}" method="post">
+    	<ul th:if="${currentUser != null}" class="nav navbar-nav navbar-right">
+			<li><a><span th:text="#{fragments.navbar.login.as} + ': «' + ${currentUser.username} + '»'"></span></a></li>
+			<li><a href="javascript:{}" onclick="document.getElementById('logoutForm').submit();"><span class="glyphicon glyphicon-log-in" th:text="'&nbsp;' + #{fragments.navbar.logout}"></span></a></li>		
+    	</ul>
+    	</form>
+	</div>
+</nav>
+</div>
